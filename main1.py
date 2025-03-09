@@ -176,7 +176,8 @@ def compute_focal_loss_cuda(preds, targets, alpha=0.25, gamma=2.0):
 
     return loss_mean.item(), elapsed_time
 
-def run_benchmark(batch_sizes=[32, 64, 128, 256, 512, 1024]):
+def run_benchmark(batch_sizes=[32, 64, 128, 256, 512, 1024, 2048, 
+    4096, 8192, 16384, 32768, 65536, 131072, 262144, 524288, 1048576]):
     print("\n----- Focal Loss Benchmark -----")
     print(f"{'Batch Size':<15}{'PyTorch (ms)':<15}{'CUDA (ms)':<15}{'Speedup':<10}")
     print("-" * 55)
