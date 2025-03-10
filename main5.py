@@ -367,13 +367,35 @@ def visualize_configuration_results(results_df, filename_prefix):
     
     # Plot heatmap
     sns.heatmap(pivot_data, annot=True, fmt=".2f", cmap="viridis", cbar_kws={'label': 'Speedup vs PyTorch'})
-    plt.title('Speedup by Batch Size and Block Size')
+    plt.title('Standard Memory: Speedup by Batch Size and Block Size')
     plt.ylabel('Batch Size')
     plt.xlabel('Block Size')
     
     plt.tight_layout()
     plt.savefig(os.path.join(args.output_dir, f'{filename_prefix}_speedup_heatmap.png'), dpi=300)
     
+
+    #Shared Memory version of 1
+    # Create a heatmap for shared memory implementation
+    plt.figure(figsize=(12, 8))
+
+    # Create pivot table for shared memory implementation
+    pivot_data_shared = results_df[results_df['implementation'] == 'shared'].pivot(
+        index='batch_size', 
+        columns='block_size', 
+        values='speedup'
+    )
+
+    # Plot heatmap
+    sns.heatmap(pivot_data_shared, annot=True, fmt=".2f", cmap="viridis", cbar_kws={'label': 'Speedup vs PyTorch'})
+    plt.title('Shared Memory: Speedup by Batch Size and Block Size')
+    plt.ylabel('Batch Size')
+    plt.xlabel('Block Size')
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(args.output_dir, f'{filename_prefix}_shared_speedup_heatmap.png'), dpi=300)
+
+
     # 2. Line plot of execution time vs batch size for each block size
     plt.figure(figsize=(14, 8))
     
